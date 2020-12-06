@@ -8,69 +8,76 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+	// MARK: - Private
 	
-	let recipeCollectionView: UICollectionView = {
-	let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+	private let recipeCollectionView: UICollectionView = {
+		let layout = UICollectionViewFlowLayout()
+		layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
 		layout.itemSize = CGSize(width: 230, height: 100)
 		layout.scrollDirection = .horizontal
 		
-		
 		let recipeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        recipeCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "recipeCell")
+		recipeCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "recipeCell")
 		return recipeCollectionView
 	}()
 	
-	let lastSeenCollectionView: UICollectionView = {
+	private let lastSeenCollectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
-			layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-			layout.itemSize = CGSize(width: 230, height: 100)
-			layout.scrollDirection = .horizontal
-			
-			let lastSeenCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-			lastSeenCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "lastSeenCell")
-			return lastSeenCollectionView
-		}()
+		layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+		layout.itemSize = CGSize(width: 230, height: 100)
+		layout.scrollDirection = .horizontal
+		
+		let lastSeenCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+		lastSeenCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "lastSeenCell")
+		return lastSeenCollectionView
+	}()
 	
-	let recipies: [RecipeModel] = [
-		RecipeModel(productName: "Тыквенные вафли", productImage: "waffles", color: UIColor.lightGray),
-		RecipeModel(productName: "Слойки с грушей", productImage: "grusha", color: UIColor.brown),
-		RecipeModel(productName: "Кабачковые оладьи", productImage: "kabachok", color: UIColor.darkGray),
-		RecipeModel(productName: "Вафельные рожки для мороженого", productImage: "vafel", color: UIColor.systemGray2),
-		RecipeModel(productName: "Протеиновый торт с ягодами", productImage: "tort", color: UIColor.gray)
+	private let recipies: [RecipeModel] = [
+		RecipeModel(productName: "Тыквенные вафли", color: .lightGray, productImage: "waffles"),
+		RecipeModel(productName: "Слойки с грушей", color: .brown, productImage: "grusha"),
+		RecipeModel(productName: "Кабачковые оладьи", color: .darkGray, productImage: "kabachok"),
+		RecipeModel(productName: "Вафельные рожки для мороженого", color: .systemGray2, productImage: "vafel"),
+		RecipeModel(productName: "Протеиновый торт с ягодами", color: .gray, productImage: "tort")
 	]
 	
-	let lastSeenRecipies: [RecipeModel] = [
-		RecipeModel(productName: "Лимонный кекс с маком", productImage: "keks", color: UIColor.brown),
-		RecipeModel(productName: "Сладкие сэндвичи с бананом", productImage: "banana", color: UIColor.lightGray),
-		RecipeModel(productName: "Тыквенные вафли", productImage: "waffles", color: UIColor.darkGray),
-		RecipeModel(productName: "Отбивные из куриного филе", productImage: "kura", color: UIColor.systemGray4),
-		RecipeModel(productName: "Сэндвич с ветчиной и сыром", productImage: "sandvich", color: UIColor.systemGray)
+	private let lastSeenRecipies: [RecipeModel] = [
+		RecipeModel(productName: "Лимонный кекс с маком", color: .brown, productImage: "keks"),
+		RecipeModel(productName: "Сладкие сэндвичи с бананом", color: .lightGray, productImage: "banana"),
+		RecipeModel(productName: "Тыквенные вафли", color: .darkGray, productImage: "waffles"),
+		RecipeModel(productName: "Отбивные из куриного филе", color: .systemGray4, productImage: "kura"),
+		RecipeModel(productName: "Сэндвич с ветчиной и сыром", color: .systemGray, productImage: "sandvich")
 	]
 	
-	
-	let image = UIImageView(image: UIImage(named: "welcome"))
-	let recipeLabel = UILabel()
-	let lastSeenLabel = UILabel()
+	private let image = UIImageView(image: UIImage(named: "welcome"))
+	private let recipeLabel = UILabel()
+	private let lastSeenLabel = UILabel()
 
+	// MARK: - Life cycle
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		configure()
 		setupLayout()
-		
 	}
 	
+	// MARK: - Override
+	
+	override var preferredStatusBarStyle : UIStatusBarStyle {
+		return .lightContent 
+	}
+}
+
+// MARK: - Configure, Layout
+
+private extension ViewController {
 	func configure() {
 		navigationItem.title = "АКТУАЛЬНОЕ"
-		
 		view.backgroundColor = .white
 		recipeCollectionView.backgroundColor = .white
 		lastSeenCollectionView.backgroundColor = .white
 		recipeLabel.text = "НОВЫЕ РЕЦЕПТЫ"
 		lastSeenLabel.text = "ПОСЛЕДНИЕ ПРОСМОТРЕННЫЕ"
-		
-		
 	}
 
 	func setupLayout() {
@@ -101,14 +108,10 @@ class ViewController: UIViewController {
 		
 		recipeCollectionView.dataSource = self
 		lastSeenCollectionView.dataSource = self
-		
-	}
-	
-	//change color of status bar to white
-	override var preferredStatusBarStyle : UIStatusBarStyle {
-		return .lightContent 
 	}
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension ViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -116,7 +119,6 @@ extension ViewController: UICollectionViewDataSource {
 		case recipeCollectionView:
 			return recipies.count
 		case lastSeenCollectionView:
-			//UITableViewHeaderFooterView
 			return lastSeenRecipies.count
 		default:
 			return 1
@@ -140,6 +142,4 @@ extension ViewController: UICollectionViewDataSource {
 		}
 		return UICollectionViewCell()
 	}
-	
 }
-

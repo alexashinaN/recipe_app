@@ -9,9 +9,15 @@
 import UIKit
 
 struct RecipeModel {
-	var productName: String
-	var productImage: String?
-	var recipeCountLabel: String?
-	var cookTimeLabel: String?
-	var color: UIColor
+	let productName: String
+	let color: UIColor
+	let productImage: String?
+	let recipeCountLabel: String?
+	
+	init(productName: String, color: UIColor, productImage: String? = nil, recipeCountLabel: String? = nil) {
+		self.productName = productName
+		self.color = color
+		self.productImage = productImage
+		self.recipeCountLabel = recipeCountLabel
+	}
 }

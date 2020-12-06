@@ -13,8 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-
-	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 	
 		window = UIWindow(frame: UIScreen.main.bounds)
@@ -24,6 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let thirdVC = ThirdViewController()
 		let fourthVC = FourthViewController()
 		let fifthVC = FifthViewController()
+		
+		UINavigationBar.appearance().barTintColor = .black
+		UINavigationBar.appearance().tintColor = .white
+		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
+		UINavigationBar.appearance().isTranslucent = false
+		UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
+		UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
+		UITabBar.appearance().isOpaque = false
+		UITabBar.appearance().backgroundColor = .white
 		
 		let firstNavController = UINavigationController(rootViewController: firstVC)
 		let secondNavController = UINavigationController(rootViewController: secondVC)
@@ -35,30 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		thirdNavController.tabBarItem = UITabBarItem(title: "Купить", image: UIImage(named: "basket"), tag: 2)
 		fourthNavController.tabBarItem = UITabBarItem(title: "Избранное", image: UIImage(named: "favourite"), tag: 3)
 		fifthNavController.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(named: "user"), tag: 4)
-		firstNavController.navigationBar.barTintColor = .black
-		firstNavController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		secondNavController.navigationBar.barTintColor = .black
-		secondNavController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		thirdNavController.navigationBar.barTintColor = .black
-		thirdNavController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		fourthNavController.navigationBar.barTintColor = .black
-		fourthNavController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		fifthNavController.navigationBar.barTintColor = .black
-		fifthNavController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		
 		
 		let tabBarVC = UITabBarController()
 		tabBarVC.setViewControllers([firstNavController, secondNavController, thirdNavController, fourthNavController, fifthNavController], animated: true)
-		
 		
 		window?.rootViewController = tabBarVC
 		window?.makeKeyAndVisible()
 		
 		return true
-
 	}
-	
-
 }
 
 extension UINavigationController {

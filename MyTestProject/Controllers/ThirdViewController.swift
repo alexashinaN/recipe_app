@@ -8,25 +8,34 @@
 
 import UIKit
 
-class ThirdViewController: UIViewController {
+final class ThirdViewController: UIViewController {
+	// MARK: - Private
 	
-	let cartImage = UIImageView(image: UIImage(named: "cart"))
-	let label = UILabel()
-
+	private let cartImage = UIImageView(image: UIImage(named: "cart"))
+	private let label = UILabel()
+	
+	// MARK: - Life cycle
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		navigationItem.title = "СПИСОК ПОКУПОК"
-		view.backgroundColor = .white
 		configure()
 		setupLayout()
-    }
-    
-	override var preferredStatusBarStyle : UIStatusBarStyle {
-		return .lightContent //.default for black style
 	}
 	
+	// MARK: - Override
+	
+	override var preferredStatusBarStyle : UIStatusBarStyle {
+		return .lightContent 
+	}
+}
+
+// MARK: - Configure, Layout
+
+private extension ThirdViewController {
 	func configure() {
+		navigationItem.title = "СПИСОК ПОКУПОК"
+		view.backgroundColor = .white
+		
 		label.text = "Ваша корзина пока пуста. Добавьте сюда необходимые продукты."
 		label.textColor = .gray
 		label.numberOfLines = 0

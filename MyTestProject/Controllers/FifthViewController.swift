@@ -8,24 +8,27 @@
 
 import UIKit
 
-class FifthViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-	let settingsImage = UIImageView(image: UIImage(named: "settings"))
-	let tableView = UITableView(frame: .zero, style: .grouped)
-	let cellId = "cellId"
+final class FifthViewController: UIViewController {
 	
-	let recipies: [[RecipeModel]] = [
+	//MARK: - Private
+	
+	private let settingsImage = UIImageView(image: UIImage(named: "settings"))
+	private let tableView = UITableView(frame: .zero, style: .grouped)
+	private let cellId = "cellId"
+	
+	private let recipies: [[RecipeModel]] = [
 		[RecipeModel(productName: "Выбрать устройство", color: .darkGray)],
 		[
-			RecipeModel(productName: "Выбранный язык", recipeCountLabel: "Русский", color: .darkGray),
-			RecipeModel(productName: "Размер карточки", recipeCountLabel: "Средняя", color: .darkGray),
-			RecipeModel(productName: "Связаться с нами", recipeCountLabel: "redmond.company/ru/", color: .darkGray)
+			RecipeModel(productName: "Выбранный язык", color: .darkGray, recipeCountLabel: "Русский"),
+			RecipeModel(productName: "Размер карточки", color: .darkGray, recipeCountLabel: "Средняя"),
+			RecipeModel(productName: "Связаться с нами", color: .darkGray, recipeCountLabel: "redmond.company/ru/")
 		]
 	]
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+	
+	// MARK: - Life cycle
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		navigationItem.title = "НАСТРОЙКИ"
 		view.backgroundColor = .black
 		setupLayout()
@@ -34,43 +37,17 @@ class FifthViewController: UIViewController, UITableViewDataSource, UITableViewD
 		tableView.dataSource = self
 		tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: cellId)
 		tableView.rowHeight = 44
-    }
+	}
 	
+	// MARK: - Override
 	override var preferredStatusBarStyle : UIStatusBarStyle {
 		return .lightContent 
 	}
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return recipies[section].count
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SettingsTableViewCell
-		cell.menu = recipies[indexPath.section][indexPath.row]
-		return cell
-	}
+}
 
-	func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		guard section == 0 else { return nil }
-		return "Количество рецептов на разных устройствах может отличаться"
-	}
-	
-	func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int){
-		let footer = view as? UITableViewHeaderFooterView
-		footer?.textLabel?.textColor = .white
-	}
-	
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		guard section == 0 else { return nil }
-		return "Мультипекарь"
-	}
-	
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
-	}
-	
+// MARK: - Layout
 
-	
+private extension FifthViewController {
 	func setupLayout() {
 		view.addSubviews(tableView, settingsImage)
 		NSLayoutConstraint.activate([
@@ -85,5 +62,41 @@ class FifthViewController: UIViewController, UITableViewDataSource, UITableViewD
 			settingsImage.widthAnchor.constraint(equalToConstant: 70)
 		])
 	}
+}
 
+// MARK: - UITableViewDataSource
+
+extension FifthViewController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return recipies[section].count
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SettingsTableViewCell
+		cell.menu = recipies[indexPath.section][indexPath.row]
+		return cell
+	}
+	
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 2
+	}
+	
+	func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		guard section == 0 else { return nil }
+		return "Количество рецептов на разных устройствах может отличаться"
+	}
+	
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		guard section == 0 else { return nil }
+		return "Мультипекарь"
+	}
+}
+
+// MARK: - UITableViewDelegate
+
+extension FifthViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+		let footer = view as? UITableViewHeaderFooterView
+		footer?.textLabel?.textColor = .white
+	}
 }

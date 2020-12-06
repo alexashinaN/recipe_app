@@ -8,11 +8,11 @@
 
 import UIKit
 
-class RecipeTableViewCell: UITableViewCell {
-	var mealImageView = UIImageView()
-	var nameLabel = UILabel()
-	var recipeCount = UILabel()
-	let labelView = UIView()
+final class RecipeTableViewCell: UITableViewCell {
+	private let mealImageView = UIImageView()
+	private let nameLabel = UILabel()
+	private let recipeCount = UILabel()
+	private let labelView = UIView()
 	
 	var menu: RecipeModel? {
 		didSet {
@@ -24,6 +24,9 @@ class RecipeTableViewCell: UITableViewCell {
 			}
 		}
 	}
+	
+	// MARK: - Init
+	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		configure()
@@ -33,7 +36,11 @@ class RecipeTableViewCell: UITableViewCell {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+}
+
+// MARK: - Configure, Layout
+
+private extension RecipeTableViewCell {
 	func configure() {
 		nameLabel.numberOfLines = 0
 		nameLabel.textAlignment = .left
@@ -49,9 +56,6 @@ class RecipeTableViewCell: UITableViewCell {
 		labelView.backgroundColor = .systemGray
 	}
 	
-}
-
-private extension RecipeTableViewCell {
 	func setupLayout() {
 		contentView.addSubviews(mealImageView, nameLabel, labelView)
 		labelView.addSubviews(recipeCount)
@@ -77,4 +81,3 @@ private extension RecipeTableViewCell {
 		])
 	}
 }
-

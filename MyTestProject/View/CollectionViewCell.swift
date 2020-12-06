@@ -8,10 +8,9 @@
 
 import UIKit
 
-class CollectionViewCell: UICollectionViewCell {
-	var imageView = UIImageView()
-	var nameLabel = UILabel()
-
+final class CollectionViewCell: UICollectionViewCell {
+	private let imageView = UIImageView()
+	private let nameLabel = UILabel()
 	
 	var menu: RecipeModel? {
 		didSet {
@@ -23,6 +22,8 @@ class CollectionViewCell: UICollectionViewCell {
 		}
 	}
 	
+	// MARK: - Init
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		self.configure()
@@ -32,7 +33,11 @@ class CollectionViewCell: UICollectionViewCell {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+}
+
+// MARK: - Configure, Layout
+
+private extension CollectionViewCell {
 	func configure() {
 		nameLabel.numberOfLines = 0
 		nameLabel.textAlignment = .left
@@ -41,9 +46,6 @@ class CollectionViewCell: UICollectionViewCell {
 		nameLabel.font = .boldSystemFont(ofSize: 15)
 	}
 	
-}
-
-private extension CollectionViewCell {
 	func setupLayout() {
 		contentView.addSubviews(imageView, nameLabel)
 		NSLayoutConstraint.activate([
@@ -59,4 +61,3 @@ private extension CollectionViewCell {
 		])
 	}
 }
-

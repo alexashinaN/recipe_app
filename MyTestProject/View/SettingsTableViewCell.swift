@@ -8,10 +8,10 @@
 
 import UIKit
 
-class SettingsTableViewCell: UITableViewCell {
+final class SettingsTableViewCell: UITableViewCell {
 	
-	var mainLabel = UILabel()
-	var detailLabel = UILabel()
+	private let mainLabel = UILabel()
+	private let detailLabel = UILabel()
 	
 	var menu: RecipeModel? {
 		didSet {
@@ -20,6 +20,9 @@ class SettingsTableViewCell: UITableViewCell {
 			detailLabel.text = menu?.recipeCountLabel
 		}
 	}
+	
+	// MARK: - Init
+	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		configure()
@@ -29,7 +32,11 @@ class SettingsTableViewCell: UITableViewCell {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+}
+
+// MARK: - Configure, Layout
+
+private extension SettingsTableViewCell {
 	func configure() {
 		mainLabel.numberOfLines = 0
 		mainLabel.textAlignment = .left
@@ -42,9 +49,7 @@ class SettingsTableViewCell: UITableViewCell {
 		detailLabel.textColor = .white
 		detailLabel.font = .systemFont(ofSize: 10)
 	}
-}
-
-private extension SettingsTableViewCell {
+	
 	func setupLayout() {
 		contentView.addSubviews(mainLabel, detailLabel)
 		
